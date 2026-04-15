@@ -1,0 +1,6 @@
+node_modules/
+dist/
+data/vocab.db
+data/vocab.db-shm
+data/vocab.db-wal
+.env
