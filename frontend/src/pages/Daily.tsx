@@ -14,8 +14,11 @@ function toDateStr(d: Date) {
 export default function Daily() {
   const [current, setCurrent] = useState<Date>(new Date())
   const [words, setWords] = useState<Word[]>([])
-  const [loading, setLoading] = useState(true)
+  const [fetchedDate, setFetchedDate] = useState<string | null>(null)
   const [strip, setStrip] = useState<DailyGroup[]>([])
+
+  // Derived: true whenever current date hasn't been fetched yet
+  const loading = fetchedDate !== toDateStr(current)
 
   // Fetch strip once on mount
   useEffect(() => {
@@ -24,13 +27,12 @@ export default function Daily() {
       .catch(() => {})
   }, [])
 
-  // Fetch words whenever current date changes
+  // Fetch words whenever current date changes — no synchronous setState
   useEffect(() => {
-    setLoading(true)
-    client.get<Word[]>('/api/daily', { params: { date: toDateStr(current) } })
-      .then(res => setWords(res.data))
-      .catch(() => setWords([]))
-      .finally(() => setLoading(false))
+    const dateStr = toDateStr(current)
+    client.get<Word[]>('/api/daily', { params: { date: dateStr } })
+      .then(res => { setWords(res.data); setFetchedDate(dateStr) })
+      .catch(() => { setWords([]); setFetchedDate(dateStr) })
   }, [current])
 
   function goBack()    { setCurrent(d => subDays(d, 1)) }
