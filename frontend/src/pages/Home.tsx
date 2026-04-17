@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { Plus } from 'lucide-react'
 import { useWords } from '../hooks/useWords'
 import WordCard from '../components/WordCard'
@@ -7,7 +7,7 @@ import Modal from '../components/Modal'
 import ConfirmDialog from '../components/ConfirmDialog'
 import SortBar from '../components/SortBar'
 import StatsBar from '../components/StatsBar'
-import { Word, WordFormData } from '../types'
+import type { Word, WordFormData } from '../types'
 
 export default function Home() {
   const { words, loading, error, filter, setFilter, refetch, createWord, updateWord, deleteWord } = useWords()
@@ -17,8 +17,6 @@ export default function Home() {
   const [deleteTarget, setDeleteTarget] = useState<Word | null>(null)
   const [submitting, setSubmitting] = useState(false)
   const [deleting, setDeleting] = useState(false)
-  const statsRef = useRef<{ refetch: () => void }>(null)
-
   // StatsBar is self-fetching; we trigger a re-mount key to refresh it
   const [statsKey, setStatsKey] = useState(0)
 

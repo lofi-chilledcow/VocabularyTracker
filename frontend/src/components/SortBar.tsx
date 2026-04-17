@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 import { Search } from 'lucide-react'
 import client from '../api/client'
-import { FilterState, SortOption } from '../types'
+import type { FilterState, SortOption } from '../types'
 
 interface Props {
   value: FilterState

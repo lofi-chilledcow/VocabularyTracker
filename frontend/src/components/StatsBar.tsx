@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import client from '../api/client'
-import { Stats } from '../types'
+import type { Stats } from '../types'
 
 function StatCard({ label, value, loading }: { label: string; value: string | number; loading: boolean }) {
   return (

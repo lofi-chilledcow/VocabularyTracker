@@ -3,7 +3,7 @@ import { format, subDays, addDays, isToday, isFuture, parseISO } from 'date-fns'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import client from '../api/client'
 import WordCard from '../components/WordCard'
-import { Word, DailyGroup } from '../types'
+import type { Word, DailyGroup } from '../types'
 
 const STRIP_DAYS = 14
 

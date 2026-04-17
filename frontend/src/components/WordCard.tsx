@@ -1,6 +1,6 @@
 import { format } from 'date-fns'
 import { Pencil, Trash2 } from 'lucide-react'
-import { Word } from '../types'
+import type { Word } from '../types'
 
 interface Props {
   word: Word

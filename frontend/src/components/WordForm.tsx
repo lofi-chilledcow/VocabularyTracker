@@ -1,7 +1,8 @@
-import { useState, useEffect, FormEvent } from 'react'
+import { useState, useEffect } from 'react'
+import type { SubmitEvent } from 'react'
 import client from '../api/client'
 import TagInput from './TagInput'
-import { WordFormData } from '../types'
+import type { WordFormData } from '../types'
 
 interface Props {
   initialValues?: Partial<WordFormData>
@@ -37,7 +38,7 @@ export default function WordForm({ initialValues, onSubmit, onCancel, isLoading 
     }
   }
 
-  async function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault()
     const errs: typeof errors = {}
     if (!form.word.trim())    errs.word    = 'Word is required'

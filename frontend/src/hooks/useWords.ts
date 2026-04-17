@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import client from '../api/client'
-import { Word, FilterState, WordFormData } from '../types'
+import type { Word, FilterState, WordFormData } from '../types'
 
 const DEFAULT_FILTER: FilterState = { sort: 'date', q: '', category: '' }
 
