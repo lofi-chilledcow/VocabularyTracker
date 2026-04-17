@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { format, subDays, addDays, isToday, isFuture, parseISO } from 'date-fns'
+import { format, subDays, addDays, isToday } from 'date-fns'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import client from '../api/client'
 import WordCard from '../components/WordCard'

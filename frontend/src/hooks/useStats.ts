@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 import client from '../api/client'
-import { Stats } from '../types'
+import type { Stats } from '../types'
 
 export function useStats() {
   const [stats, setStats] = useState<Stats | null>(null)
