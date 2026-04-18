@@ -84,7 +84,7 @@ jobs:
       - name: Confirm dist/ exists
         run: test -d frontend/dist
 
-deploy:
+  deploy:
     runs-on: self-hosted
     needs: [build-backend, build-frontend]
     steps:
