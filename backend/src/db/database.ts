@@ -13,6 +13,12 @@ const db = new Database(path.resolve(DB_PATH))
 db.pragma('journal_mode = WAL')
 db.pragma('foreign_keys = ON')
 
+// Migrate: rename acronym → antonym if the old column still exists
+const cols = (db.prepare(`PRAGMA table_info(words)`).all() as { name: string }[]).map(c => c.name)
+if (cols.includes('acronym')) {
+  db.exec(`ALTER TABLE words RENAME COLUMN acronym TO antonym`)
+}
+
 db.exec(`
   CREATE TABLE IF NOT EXISTS words (
     id          TEXT PRIMARY KEY,
