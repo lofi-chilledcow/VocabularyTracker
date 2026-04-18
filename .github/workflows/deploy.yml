@@ -88,14 +88,9 @@ jobs:
     runs-on: self-hosted
     needs: [build-backend, build-frontend]
     steps:
-      - name: Deploy to VM via SSH
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.VM_HOST }}
-          username: ${{ secrets.VM_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            cd ~/projects/VocabularyTracker
-            git pull origin main
-            docker rm -f vocabularytracker_backend_1 vocabularytracker_frontend_1 || true
-            docker-compose -f docker-compose.prod.yml up -d --build
+      - name: Deploy
+        run: |
+          cd ~/projects/VocabularyTracker
+          git pull origin main
+          docker rm -f vocabularytracker_backend_1 vocabularytracker_frontend_1 || true
+          docker-compose -f docker-compose.prod.yml up -d --build
