@@ -85,7 +85,7 @@ jobs:
         run: test -d frontend/dist
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: [build-backend, build-frontend]
     steps:
       - name: Deploy to VM via SSH
