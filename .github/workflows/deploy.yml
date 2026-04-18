@@ -97,4 +97,5 @@ jobs:
           script: |
             cd ~/projects/VocabularyTracker
             git pull origin main
+            docker rm -f vocabularytracker_backend_1 vocabularytracker_frontend_1 || true
             docker-compose -f docker-compose.prod.yml up -d --build
