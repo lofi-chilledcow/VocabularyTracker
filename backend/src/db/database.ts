@@ -4,11 +4,14 @@ import path from 'path'
 import fs from 'fs'
 
 const DB_PATH = process.env.DB_PATH || './data/vocab.db'
-const dir = path.dirname(path.resolve(DB_PATH))
+const isMemory = DB_PATH === ':memory:'
 
-fs.mkdirSync(dir, { recursive: true })
+if (!isMemory) {
+  const dir = path.dirname(path.resolve(DB_PATH))
+  fs.mkdirSync(dir, { recursive: true })
+}
 
-const db = new Database(path.resolve(DB_PATH))
+const db = new Database(isMemory ? ':memory:' : path.resolve(DB_PATH))
 
 db.pragma('journal_mode = WAL')
 db.pragma('foreign_keys = ON')
