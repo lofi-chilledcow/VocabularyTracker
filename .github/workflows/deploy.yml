@@ -84,7 +84,7 @@ jobs:
       - name: Confirm dist/ exists
         run: test -d frontend/dist
 
-  deploy:
+deploy:
     runs-on: self-hosted
     needs: [build-backend, build-frontend]
     steps:
@@ -92,5 +92,5 @@ jobs:
         run: |
           cd ~/projects/VocabularyTracker
           git pull origin main
-          docker rm -f vocabularytracker_backend_1 vocabularytracker_frontend_1 || true
+          docker ps -aq --filter "name=vocabularytracker" | xargs -r docker rm -f
           docker-compose -f docker-compose.prod.yml up -d --build
