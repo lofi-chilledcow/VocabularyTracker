@@ -7,7 +7,7 @@ const router = Router()
 const WORD_SELECT = `
   SELECT
     w.id, w.word, w.meaning, w.sentence,
-    w.category, w.acronym,
+    w.category, w.antonym,
     w.created_at, w.updated_at,
     GROUP_CONCAT(s.synonym, '||') AS synonyms
   FROM words w

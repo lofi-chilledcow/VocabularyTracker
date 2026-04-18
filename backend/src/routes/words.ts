@@ -8,7 +8,7 @@ const router = Router()
 const WORD_SELECT = `
   SELECT
     w.id, w.word, w.meaning, w.sentence,
-    w.category, w.acronym,
+    w.category, w.antonym,
     w.created_at, w.updated_at,
     GROUP_CONCAT(s.synonym, '||') AS synonyms
   FROM words w
@@ -72,7 +72,7 @@ router.post('/', (req: Request, res: Response, next: NextFunction) => {
       const id = uuidv4()
 
       db.prepare(`
-        INSERT INTO words (id, word, meaning, sentence, category, acronym)
+        INSERT INTO words (id, word, meaning, sentence, category, antonym)
         VALUES (?, ?, ?, ?, ?, ?)
       `).run(
         id,
@@ -80,7 +80,7 @@ router.post('/', (req: Request, res: Response, next: NextFunction) => {
         body.meaning.trim(),
         body.sentence?.trim() || null,
         body.category?.trim() || null,
-        body.acronym?.trim()  || null
+        body.antonym?.trim()  || null
       )
 
       if (body.synonyms?.length) {
@@ -139,7 +139,7 @@ router.put('/:id', (req: Request, res: Response, next: NextFunction) => {
     const update = db.transaction(() => {
       db.prepare(`
         UPDATE words
-        SET word = ?, meaning = ?, sentence = ?, category = ?, acronym = ?,
+        SET word = ?, meaning = ?, sentence = ?, category = ?, antonym = ?,
             updated_at = strftime('%Y-%m-%d %H:%M:%S','now','localtime')
         WHERE id = ?
       `).run(
@@ -147,7 +147,7 @@ router.put('/:id', (req: Request, res: Response, next: NextFunction) => {
         body.meaning.trim(),
         body.sentence?.trim() || null,
         body.category?.trim() || null,
-        body.acronym?.trim()  || null,
+        body.antonym?.trim()  || null,
         id
       )
 

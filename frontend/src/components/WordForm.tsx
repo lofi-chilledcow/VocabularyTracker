@@ -16,7 +16,7 @@ const empty: WordFormData = {
   meaning: '',
   sentence: '',
   category: '',
-  acronym: '',
+  antonym: '',
   synonyms: [],
 }
 
@@ -91,7 +91,7 @@ export default function WordForm({ initialValues, onSubmit, onCancel, isLoading 
         />
       </div>
 
-      {/* Category + Acronym */}
+      {/* Category + Antonym */}
       <div className="grid grid-cols-2 gap-3">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
@@ -108,13 +108,13 @@ export default function WordForm({ initialValues, onSubmit, onCancel, isLoading 
           </datalist>
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Acronym</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Antonym</label>
           <input
             type="text"
-            value={form.acronym ?? ''}
-            onChange={e => set('acronym', e.target.value)}
+            value={form.antonym ?? ''}
+            onChange={e => set('antonym', e.target.value)}
             className="w-full border border-gray-300 rounded-md px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="e.g. RSVP"
+            placeholder="Add antonym"
           />
         </div>
       </div>

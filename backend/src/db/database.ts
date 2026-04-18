@@ -20,7 +20,7 @@ db.exec(`
     meaning     TEXT NOT NULL,
     sentence    TEXT,
     category    TEXT,
-    acronym     TEXT,
+    antonym     TEXT,
     created_at  TEXT NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%S','now','localtime')),
     updated_at  TEXT NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%S','now','localtime'))
   );
@@ -36,7 +36,7 @@ db.exec(`
 const count = (db.prepare('SELECT COUNT(*) as count FROM words').get() as any).count
 if (count === 0) {
   const insertWord = db.prepare(`
-    INSERT INTO words (id, word, meaning, sentence, category, acronym)
+    INSERT INTO words (id, word, meaning, sentence, category, antonym)
     VALUES (?, ?, ?, ?, ?, ?)
   `)
   const insertSyn = db.prepare(`

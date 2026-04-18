@@ -4,7 +4,7 @@ export interface Word {
   meaning: string
   sentence?: string
   category?: string
-  acronym?: string
+  antonym?: string
   synonyms: string[]
   created_at: string
   updated_at: string
@@ -15,7 +15,7 @@ export interface WordFormData {
   meaning: string
   sentence?: string
   category?: string
-  acronym?: string
+  antonym?: string
   synonyms?: string[]
 }
 

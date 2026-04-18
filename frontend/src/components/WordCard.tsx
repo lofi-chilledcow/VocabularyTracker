@@ -19,9 +19,9 @@ export default function WordCard({ word, onEdit, onDelete }: Props) {
               {word.category}
             </span>
           )}
-          {word.acronym && (
+          {word.antonym && (
             <span className="px-2 py-0.5 text-xs rounded-full bg-purple-100 text-purple-700 font-medium">
-              {word.acronym}
+              {word.antonym}
             </span>
           )}
         </div>
