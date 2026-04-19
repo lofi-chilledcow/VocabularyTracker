@@ -4,7 +4,7 @@ import axios, { AxiosError } from "axios";
 import * as dotenv from "dotenv";
 import { z } from "zod";
 
-dotenv.config();
+dotenv.config({ quiet: true });
 
 const API_URL = process.env.API_URL || "http://192.168.1.224:5000";
 const api = axios.create({ baseURL: API_URL });
