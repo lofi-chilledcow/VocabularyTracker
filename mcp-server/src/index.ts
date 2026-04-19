@@ -25,16 +25,18 @@ function errorMessage(err: unknown): string {
 }
 
 // 1. add_word
-server.tool(
+server.registerTool(
   "add_word",
-  "Add a new word to VocabularyTracker",
   {
-    word: z.string().describe("The word to add"),
-    meaning: z.string().describe("The meaning of the word"),
-    sentence: z.string().optional().describe("An example sentence"),
-    category: z.string().optional().describe("Word category"),
-    antonym: z.string().optional().describe("Antonym of the word"),
-    synonyms: z.array(z.string()).optional().describe("List of synonyms"),
+    description: "Add a new word to VocabularyTracker",
+    inputSchema: {
+      word: z.string().describe("The word to add"),
+      meaning: z.string().describe("The meaning of the word"),
+      sentence: z.string().optional().describe("An example sentence"),
+      category: z.string().optional().describe("Word category"),
+      antonym: z.string().optional().describe("Antonym of the word"),
+      synonyms: z.array(z.string()).optional().describe("List of synonyms"),
+    },
   },
   async (params) => {
     try {
@@ -57,11 +59,13 @@ server.tool(
 );
 
 // 2. search_words
-server.tool(
+server.registerTool(
   "search_words",
-  "Search words by keyword",
   {
-    q: z.string().describe("Search keyword"),
+    description: "Search words by keyword",
+    inputSchema: {
+      q: z.string().describe("Search keyword"),
+    },
   },
   async ({ q }) => {
     try {
@@ -84,15 +88,17 @@ server.tool(
 );
 
 // 3. list_words
-server.tool(
+server.registerTool(
   "list_words",
-  "List all words with optional sort and category filter",
   {
-    sort: z
-      .enum(["date", "alpha", "category"])
-      .optional()
-      .describe("Sort order: date, alpha, or category"),
-    category: z.string().optional().describe("Filter by category"),
+    description: "List all words with optional sort and category filter",
+    inputSchema: {
+      sort: z
+        .enum(["date", "alpha", "category"])
+        .optional()
+        .describe("Sort order: date, alpha, or category"),
+      category: z.string().optional().describe("Filter by category"),
+    },
   },
   async (params) => {
     try {
@@ -115,11 +121,13 @@ server.tool(
 );
 
 // 4. get_word
-server.tool(
+server.registerTool(
   "get_word",
-  "Get a single word by id",
   {
-    id: z.string().describe("Word ID"),
+    description: "Get a single word by id",
+    inputSchema: {
+      id: z.string().describe("Word ID"),
+    },
   },
   async ({ id }) => {
     try {
@@ -142,11 +150,13 @@ server.tool(
 );
 
 // 5. delete_word
-server.tool(
+server.registerTool(
   "delete_word",
-  "Delete a word by id",
   {
-    id: z.string().describe("Word ID"),
+    description: "Delete a word by id",
+    inputSchema: {
+      id: z.string().describe("Word ID"),
+    },
   },
   async ({ id }) => {
     try {
@@ -169,10 +179,12 @@ server.tool(
 );
 
 // 6. get_stats
-server.tool(
+server.registerTool(
   "get_stats",
-  "Get vocabulary statistics",
-  {},
+  {
+    description: "Get vocabulary statistics",
+    inputSchema: {},
+  },
   async () => {
     try {
       const res = await api.get("/api/stats");
@@ -194,14 +206,16 @@ server.tool(
 );
 
 // 7. get_daily
-server.tool(
+server.registerTool(
   "get_daily",
-  "Get words added on a specific date",
   {
-    date: z
-      .string()
-      .optional()
-      .describe("Date in YYYY-MM-DD format (defaults to today)"),
+    description: "Get words added on a specific date",
+    inputSchema: {
+      date: z
+        .string()
+        .optional()
+        .describe("Date in YYYY-MM-DD format (defaults to today)"),
+    },
   },
   async ({ date }) => {
     try {
@@ -226,10 +240,12 @@ server.tool(
 );
 
 // 8. list_categories
-server.tool(
+server.registerTool(
   "list_categories",
-  "List all word categories with counts",
-  {},
+  {
+    description: "List all word categories with counts",
+    inputSchema: {},
+  },
   async () => {
     try {
       const res = await api.get("/api/categories");
