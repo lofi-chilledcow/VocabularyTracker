@@ -17,6 +17,7 @@ export interface WordFormData {
   category?: string
   antonym?: string
   synonyms?: string[]
+  created_at?: string
 }
 
 export interface DailyGroup {

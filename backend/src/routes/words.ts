@@ -72,15 +72,16 @@ router.post('/', (req: Request, res: Response, next: NextFunction) => {
       const id = uuidv4()
 
       db.prepare(`
-        INSERT INTO words (id, word, meaning, sentence, category, antonym)
-        VALUES (?, ?, ?, ?, ?, ?)
+        INSERT INTO words (id, word, meaning, sentence, category, antonym, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, COALESCE(?, strftime('%Y-%m-%d %H:%M:%S','now')))
       `).run(
         id,
         body.word.trim(),
         body.meaning.trim(),
         body.sentence?.trim() || null,
         body.category?.trim() || null,
-        body.antonym?.trim()  || null
+        body.antonym?.trim()  || null,
+        body.created_at       || null
       )
 
       if (body.synonyms?.length) {

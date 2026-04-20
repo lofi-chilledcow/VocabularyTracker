@@ -40,7 +40,8 @@ server.registerTool(
   },
   async (params) => {
     try {
-      const res = await api.post("/api/words", params);
+      const created_at = new Date().toISOString().replace("T", " ").slice(0, 19);
+      const res = await api.post("/api/words", { ...params, created_at });
       return {
         content: [
           {

@@ -29,7 +29,8 @@ export function useWords() {
   useEffect(() => { fetchWords(filter) }, [filter])
 
   async function createWord(data: WordFormData): Promise<Word> {
-    const res = await client.post<Word>('/api/words', data)
+    const created_at = new Date().toISOString().replace('T', ' ').slice(0, 19)
+    const res = await client.post<Word>('/api/words', { ...data, created_at })
     return res.data
   }
 
