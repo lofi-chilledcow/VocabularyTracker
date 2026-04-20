@@ -22,30 +22,30 @@ router.get('/', (req: Request, res: Response, next: NextFunction) => {
     const wordsToday = (
       db.prepare(`
         SELECT COUNT(*) as count FROM words
-        WHERE strftime('%Y-%m-%d', created_at, 'localtime') = strftime('%Y-%m-%d', 'now', 'localtime')
+        WHERE strftime('%Y-%m-%d', created_at) = strftime('%Y-%m-%d', 'now')
       `).get() as any
     ).count as number
 
     const wordsThisWeek = (
       db.prepare(`
         SELECT COUNT(*) as count FROM words
-        WHERE strftime('%Y-%m-%d', created_at, 'localtime') >= strftime('%Y-%m-%d', 'now', '-7 days', 'localtime')
+        WHERE created_at >= datetime('now', '-7 days')
       `).get() as any
     ).count as number
 
     // Streak: consecutive days (including today) that have at least one word
     const days = db.prepare(`
-      SELECT DISTINCT strftime('%Y-%m-%d', created_at, 'localtime') AS date
+      SELECT DISTINCT strftime('%Y-%m-%d', created_at) AS date
       FROM words
       ORDER BY date DESC
     `).all() as { date: string }[]
 
     let streakDays = 0
-    const now = new Date()
 
     for (let i = 0; i < days.length; i++) {
-      const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i)
-      const expectedStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`
+      const d = new Date()
+      d.setUTCDate(d.getUTCDate() - i)
+      const expectedStr = d.toISOString().split('T')[0]
 
       if (days[i].date === expectedStr) {
         streakDays++
