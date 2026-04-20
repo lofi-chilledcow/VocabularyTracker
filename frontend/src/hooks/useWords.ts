@@ -29,7 +29,8 @@ export function useWords() {
   useEffect(() => { fetchWords(filter) }, [filter])
 
   async function createWord(data: WordFormData): Promise<Word> {
-    const created_at = new Date().toISOString().replace('T', ' ').slice(0, 19)
+    const now = new Date()
+    const created_at = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`
     const res = await client.post<Word>('/api/words', { ...data, created_at })
     return res.data
   }

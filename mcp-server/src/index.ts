@@ -40,7 +40,8 @@ server.registerTool(
   },
   async (params) => {
     try {
-      const created_at = new Date().toISOString().replace("T", " ").slice(0, 19);
+      const now = new Date();
+      const created_at = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')} ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
       const res = await api.post("/api/words", { ...params, created_at });
       return {
         content: [
@@ -188,7 +189,8 @@ server.registerTool(
   },
   async () => {
     try {
-      const date = new Date().toISOString().split("T")[0];
+      const now = new Date();
+      const date = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
       const res = await api.get("/api/stats", { params: { date } });
       return {
         content: [
