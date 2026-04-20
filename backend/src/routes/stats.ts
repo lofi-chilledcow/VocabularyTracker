@@ -7,6 +7,12 @@ const router = Router()
 // GET /api/stats
 router.get('/', (req: Request, res: Response, next: NextFunction) => {
   try {
+    const clientDate = typeof req.query.date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(req.query.date)
+      ? req.query.date
+      : null
+
+    const todayExpr = clientDate ? `'${clientDate}'` : `strftime('%Y-%m-%d', 'now')`
+
     const totalWords = (
       db.prepare('SELECT COUNT(*) as count FROM words').get() as any
     ).count as number
@@ -22,7 +28,7 @@ router.get('/', (req: Request, res: Response, next: NextFunction) => {
     const wordsToday = (
       db.prepare(`
         SELECT COUNT(*) as count FROM words
-        WHERE strftime('%Y-%m-%d', created_at) = strftime('%Y-%m-%d', 'now')
+        WHERE strftime('%Y-%m-%d', created_at) = ${todayExpr}
       `).get() as any
     ).count as number
 
@@ -41,9 +47,10 @@ router.get('/', (req: Request, res: Response, next: NextFunction) => {
     `).all() as { date: string }[]
 
     let streakDays = 0
+    const baseDate = clientDate ? new Date(clientDate + 'T00:00:00Z') : new Date()
 
     for (let i = 0; i < days.length; i++) {
-      const d = new Date()
+      const d = new Date(baseDate)
       d.setUTCDate(d.getUTCDate() - i)
       const expectedStr = d.toISOString().split('T')[0]
 

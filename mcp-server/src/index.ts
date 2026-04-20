@@ -188,7 +188,8 @@ server.registerTool(
   },
   async () => {
     try {
-      const res = await api.get("/api/stats");
+      const date = new Date().toISOString().split("T")[0];
+      const res = await api.get("/api/stats", { params: { date } });
       return {
         content: [
           {

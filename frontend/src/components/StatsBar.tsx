@@ -25,7 +25,8 @@ export default function StatsBar() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    client.get<Stats>('/api/stats')
+    const today = new Date().toISOString().split('T')[0]
+    client.get<Stats>('/api/stats', { params: { date: today } })
       .then(res => setStats(res.data))
       .catch(() => {})
       .finally(() => setLoading(false))
